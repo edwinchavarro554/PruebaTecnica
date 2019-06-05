@@ -1,0 +1,43 @@
+﻿<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+
+    function ClickRow(nombre) {
+        $.getJSON("Home/GetDetail?nombre=" + nombre  + "",
+            function (json) {
+                alert(json.json);
+            });
+    }
+
+
+    $(document).ready(function () {
+
+        //Call EmpDetails jsonResult Method
+        $.getJSON("Home/CountryDetails",
+            function (json) {
+                var tr;
+                var resultJson = JSON.parse(json.json);
+                //Append each row to html table
+                for (var i = 0; i < resultJson.length; i++) {
+                    tr = $('<tr onClick=ClickRow("' + resultJson[i].alpha2Code  + '");/>');
+                    tr.append("<td>" + resultJson[i].Nombre + "</td>");
+                    tr.append("<td>" + resultJson[i].Capital + "</td>");
+                    tr.append("<td>" + resultJson[i].Region + "</td>");
+                    tr.append("<td>" + resultJson[i].alpha2Code + "</td>");
+                    $('table').append(tr);
+                }
+            });
+    });
+</script>
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+
+            <th>Nombre</th>
+            <th>Capital</th>
+            <th>Region</th>
+            <th>alpha2Code</th>
+            
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
